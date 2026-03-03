@@ -1,4 +1,5 @@
 require("dotenv").config();
+console.log("ARQUIVO SERVER ATIVO:", __filename);
 
 const express = require("express");
 const axios = require("axios");
@@ -36,15 +37,19 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
 
     const audioUrl = uploadResponse.data.upload_url;
 
+    const payload = {
+      audio_url: audioUrl,
+      language_detection: true,
+      speech_models: ["universal-3-pro"],
+      temperature: 0,
+    };
+
+    console.log("PAYLOAD ENVIADO:", payload);
+
     // 2. Criar transcrição
     const transcriptResponse = await axios.post(
       `${ASSEMBLYAI_BASE_URL}/transcript`,
-      {
-        audio_url: audioUrl,
-        language_detection: true,
-        speech_models: ["universal-3-pro"],
-        temperature: 0,
-      },
+      payload,
       { headers }
     );
 
@@ -52,7 +57,6 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
 
     // 3. Polling
     let completed = false;
-    let result;
 
     while (!completed) {
       await new Promise((r) => setTimeout(r, 3000));
@@ -64,16 +68,25 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
 
       if (polling.data.status === "completed") {
         completed = true;
-        result = polling.data;
       } else if (polling.data.status === "error") {
         throw new Error(polling.data.error);
       }
     }
 
-    // 4. Limpar arquivo local
+    // 4. Buscar parágrafos oficiais
+    const paragraphsResponse = await axios.get(
+      `${ASSEMBLYAI_BASE_URL}/transcript/${transcriptId}/paragraphs`,
+      { headers }
+    );
+
+    // 5. Limpar arquivo local
     fs.unlinkSync(filePath);
 
-    res.json(result);
+    // 6. Retornar parágrafos
+    res.json(paragraphsResponse.data);
+
+    // 4. Limpar arquivo local
+    fs.unlinkSync(filePath);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });

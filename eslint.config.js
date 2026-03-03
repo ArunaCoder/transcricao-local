@@ -24,6 +24,14 @@ module.exports = [
     },
   },
   {
+    files: ["public/**/*.js"],
+    languageOptions: {
+      globals: globals.browser,
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+  },
+  {
     ignores: ["node_modules/**", "uploads/**"],
   },
 ];
