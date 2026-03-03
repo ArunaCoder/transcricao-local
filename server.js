@@ -1,4 +1,8 @@
 require("dotenv").config();
+const { mergeShortParagraphs } = require("./utils/mergeParagraphs");
+const applyDictionaryCorrections = require("./utils/applyDictionaryCorrections");
+const dictionary = require("./dictionary.json");
+
 console.log("ARQUIVO SERVER ATIVO:", __filename);
 
 const express = require("express");
@@ -79,14 +83,22 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
       { headers }
     );
 
+    const paragraphs = paragraphsResponse.data.paragraphs;
+
+    const mergedParagraphs = mergeShortParagraphs(paragraphs, {
+      minLength: 400,
+    });
+
+    const adjustedParagraphs = applyDictionaryCorrections(
+      mergedParagraphs,
+      dictionary
+    );
+
     // 5. Limpar arquivo local
     fs.unlinkSync(filePath);
 
-    // 6. Retornar parágrafos
-    res.json(paragraphsResponse.data);
-
-    // 4. Limpar arquivo local
-    fs.unlinkSync(filePath);
+    // 6. Retornar parágrafos ajustados
+    res.json({ paragraphs: adjustedParagraphs });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
