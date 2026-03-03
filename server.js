@@ -124,13 +124,25 @@ app.post("/dictionary", (req, res) => {
     const { from, to, capitalizationMode, wholeWord = true } = req.body;
 
     if (!from || !to || !capitalizationMode) {
-      return res
-        .status(400)
-        .json({ error: "Campos obrigatórios: from, to, capitalizationMode" });
+      return res.status(400).json({
+        error: "Campos obrigatórios: from, to, capitalizationMode",
+      });
     }
 
     const raw = fs.readFileSync("./dictionary.json", "utf-8");
     const dictionary = JSON.parse(raw);
+
+    // Verificar duplicata (ignorando maiúsculas)
+    const existing = dictionary.find(
+      (rule) => rule.from.toLowerCase() === from.toLowerCase()
+    );
+
+    if (existing) {
+      return res.status(409).json({
+        error: "Regra já existe",
+        existingRule: existing,
+      });
+    }
 
     const newRule = {
       id: Date.now().toString(),

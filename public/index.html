@@ -101,7 +101,7 @@ async function addRule(mode) {
     return;
   }
 
-  await fetch("/dictionary", {
+  const response = await fetch("/dictionary", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -112,12 +112,34 @@ async function addRule(mode) {
     })
   });
 
+  if (response.status === 409) {
+    const data = await response.json();
+
+    const confirmReplace = confirm(
+      `A regra já existe:\n\n${data.existingRule.from} → ${data.existingRule.to}\n\nDeseja substituir?`
+    );
+
+    if (confirmReplace) {
+      await fetch("/dictionary/" + data.existingRule.id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from,
+          to,
+          capitalizationMode: mode,
+          wholeWord: true
+        })
+      });
+    } else {
+      return;
+    }
+  }
+
   fromInput.value = "";
   toInput.value = "";
 
   loadDictionary();
 }
-
 async function deleteRule(id) {
   if (!confirm("Remover esta regra?")) return;
 

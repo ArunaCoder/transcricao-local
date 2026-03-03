@@ -79,3 +79,30 @@ hr {
   margin-top: 10px;
   font-weight: bold;
 }
+
+/* Layout fixo para ambas as tabelas */
+#fixedTable,
+#normalizeTable {
+  table-layout: fixed;
+}
+
+/* Primeira e segunda coluna iguais */
+#fixedTable th:nth-child(1),
+#fixedTable td:nth-child(1),
+#fixedTable th:nth-child(2),
+#fixedTable td:nth-child(2),
+#normalizeTable th:nth-child(1),
+#normalizeTable td:nth-child(1),
+#normalizeTable th:nth-child(2),
+#normalizeTable td:nth-child(2) {
+  width: 45%;
+}
+
+/* Última coluna menor e igual entre as duas */
+#fixedTable th:nth-child(3),
+#fixedTable td:nth-child(3),
+#normalizeTable th:nth-child(3),
+#normalizeTable td:nth-child(3) {
+  width: 10%;
+  text-align: center;
+}
