@@ -37,6 +37,14 @@ button:hover {
   background-color: #1f4fbf;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button:disabled:hover {
+  background-color: #2d6cdf; /* não muda no hover */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -105,4 +113,58 @@ hr {
 #normalizeTable td:nth-child(3) {
   width: 10%;
   text-align: center;
+}
+
+#audioInput {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#resultado {
+  height: 90vh;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative;
+}
+
+#textoResultado {
+  line-height: 1.6;
+}
+
+#resultado {
+  height: 70vh;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Loader centralizado apenas quando visível */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  width: 50px;
+  height: 50px;
+  border: 6px solid #e0e0e0;
+  border-top: 6px solid #2d6cdf;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
 }

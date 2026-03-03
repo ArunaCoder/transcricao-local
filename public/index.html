@@ -8,11 +8,16 @@
   <body>
     <h1>Transcrição AssemblyAI</h1>
 
-    <input type="file" id="audioInput" accept="audio/*" />
-    <button id="transcreverBtn">Transcrever</button>
+<input type="file" id="audioInput" accept="audio/*" />
+<br>
+<button id="transcreverBtn">Transcrever</button>
 
-    <p id="status"></p>
-    <div id="resultado"></div>
+<p id="status"></p>
+
+<div id="resultado">
+  <div id="loader" class="loader hidden"></div>
+  <div id="textoResultado"></div>
+</div>
 
     <script src="app.js"></script>
 

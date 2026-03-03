@@ -13,8 +13,17 @@ transcreverBtn.addEventListener("click", async () => {
   const formData = new FormData();
   formData.append("audio", file);
 
-  status.textContent = "Enviando áudio...";
-  resultado.textContent = "";
+  // Desabilita botão
+  transcreverBtn.disabled = true;
+
+  // Limpa status
+  status.textContent = "";
+
+  // Mostra loader dentro da caixa
+  resultado.innerHTML = `
+    <div id="loader" class="loader"></div>
+    <div id="textoResultado"></div>
+  `;
 
   try {
     const response = await fetch("/transcrever", {
@@ -22,21 +31,20 @@ transcreverBtn.addEventListener("click", async () => {
       body: formData,
     });
 
-    status.textContent = "Processando transcrição...";
-
     const data = await response.json();
 
     if (response.ok) {
-      status.textContent = "Transcrição concluída.";
-      resultado.innerHTML = data.paragraphs
+      document.getElementById("loader").remove();
+
+      document.getElementById("textoResultado").innerHTML = data.paragraphs
         .map((p) => `<p>${p.text}</p>`)
         .join("");
     } else {
-      status.textContent = "Erro.";
-      resultado.textContent = data.error;
+      resultado.textContent = data.error || "Erro.";
     }
   } catch (err) {
-    status.textContent = "Erro inesperado.";
-    resultado.textContent = err.message;
+    resultado.textContent = "Erro inesperado: " + err.message;
+  } finally {
+    transcreverBtn.disabled = false;
   }
 });
