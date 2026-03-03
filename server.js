@@ -1,7 +1,10 @@
 require("dotenv").config();
 const { mergeShortParagraphs } = require("./utils/mergeParagraphs");
 const applyDictionaryCorrections = require("./utils/applyDictionaryCorrections");
-const dictionary = require("./dictionary.json");
+function loadDictionary() {
+  const raw = fs.readFileSync("./dictionary.json", "utf-8");
+  return JSON.parse(raw);
+}
 
 console.log("ARQUIVO SERVER ATIVO:", __filename);
 
@@ -91,7 +94,7 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
 
     const adjustedParagraphs = applyDictionaryCorrections(
       mergedParagraphs,
-      dictionary
+      loadDictionary()
     );
 
     // 5. Limpar arquivo local
@@ -102,6 +105,71 @@ app.post("/transcrever", upload.single("audio"), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/dictionary", (req, res) => {
+  try {
+    const raw = fs.readFileSync("./dictionary.json", "utf-8");
+    const dictionary = JSON.parse(raw);
+    res.json(dictionary);
+  } catch (err) {
+    console.error("Erro ao carregar dicionário:", err);
+    res.status(500).json({ error: "Erro ao carregar dicionário" });
+  }
+});
+
+app.post("/dictionary", (req, res) => {
+  try {
+    const { from, to, caseSensitive = false, wholeWord = false } = req.body;
+
+    if (!from || !to) {
+      return res
+        .status(400)
+        .json({ error: "Campos 'from' e 'to' são obrigatórios." });
+    }
+
+    const raw = fs.readFileSync("./dictionary.json", "utf-8");
+    const dictionary = JSON.parse(raw);
+
+    const newRule = {
+      id: Date.now().toString(),
+      from,
+      to,
+      caseSensitive,
+      wholeWord,
+    };
+
+    dictionary.push(newRule);
+
+    fs.writeFileSync("./dictionary.json", JSON.stringify(dictionary, null, 2));
+
+    res.status(201).json(newRule);
+  } catch (err) {
+    console.error("Erro ao adicionar regra:", err);
+    res.status(500).json({ error: "Erro ao adicionar regra." });
+  }
+});
+
+app.delete("/dictionary/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const raw = fs.readFileSync("./dictionary.json", "utf-8");
+    const dictionary = JSON.parse(raw);
+
+    const updated = dictionary.filter((rule) => rule.id !== id);
+
+    if (updated.length === dictionary.length) {
+      return res.status(404).json({ error: "Regra não encontrada." });
+    }
+
+    fs.writeFileSync("./dictionary.json", JSON.stringify(updated, null, 2));
+
+    res.json({ message: "Regra removida com sucesso." });
+  } catch (err) {
+    console.error("Erro ao remover regra:", err);
+    res.status(500).json({ error: "Erro ao remover regra." });
   }
 });
 
