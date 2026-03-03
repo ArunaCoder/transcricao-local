@@ -121,12 +121,12 @@ app.get("/dictionary", (req, res) => {
 
 app.post("/dictionary", (req, res) => {
   try {
-    const { from, to, caseSensitive = false, wholeWord = false } = req.body;
+    const { from, to, capitalizationMode, wholeWord = true } = req.body;
 
-    if (!from || !to) {
+    if (!from || !to || !capitalizationMode) {
       return res
         .status(400)
-        .json({ error: "Campos 'from' e 'to' são obrigatórios." });
+        .json({ error: "Campos obrigatórios: from, to, capitalizationMode" });
     }
 
     const raw = fs.readFileSync("./dictionary.json", "utf-8");
@@ -136,7 +136,7 @@ app.post("/dictionary", (req, res) => {
       id: Date.now().toString(),
       from,
       to,
-      caseSensitive,
+      capitalizationMode,
       wholeWord,
     };
 
@@ -170,6 +170,43 @@ app.delete("/dictionary/:id", (req, res) => {
   } catch (err) {
     console.error("Erro ao remover regra:", err);
     res.status(500).json({ error: "Erro ao remover regra." });
+  }
+});
+
+app.put("/dictionary/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+    const { from, to, capitalizationMode, wholeWord = true } = req.body;
+
+    if (!from || !to || !capitalizationMode) {
+      return res.status(400).json({
+        error: "Campos obrigatórios: from, to, capitalizationMode",
+      });
+    }
+
+    const raw = fs.readFileSync("./dictionary.json", "utf-8");
+    const dictionary = JSON.parse(raw);
+
+    const index = dictionary.findIndex((rule) => rule.id === id);
+
+    if (index === -1) {
+      return res.status(404).json({ error: "Regra não encontrada." });
+    }
+
+    dictionary[index] = {
+      id,
+      from,
+      to,
+      capitalizationMode,
+      wholeWord,
+    };
+
+    fs.writeFileSync("./dictionary.json", JSON.stringify(dictionary, null, 2));
+
+    res.json(dictionary[index]);
+  } catch (err) {
+    console.error("Erro ao editar regra:", err);
+    res.status(500).json({ error: "Erro ao editar regra." });
   }
 });
 

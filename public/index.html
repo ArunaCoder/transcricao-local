@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Transcrição AssemblyAI</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h1>Transcrição AssemblyAI</h1>
@@ -14,5 +15,120 @@
     <div id="resultado"></div>
 
     <script src="app.js"></script>
+
+
+   <hr>
+
+<h2>Sinônimos de Deus (primeira letra maiúscula)</h2>
+
+<input type="text" id="fixedFrom" placeholder="De">
+<input type="text" id="fixedTo" placeholder="Para">
+<button onclick="addRule('fixed')">Adicionar</button>
+
+<br><br>
+
+<table border="1" id="fixedTable">
+  <thead>
+    <tr>
+      <th>De</th>
+      <th>Para</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<br><br>
+
+<h2>Demais</h2>
+
+<input type="text" id="normalizeFrom" placeholder="De">
+<input type="text" id="normalizeTo" placeholder="Para">
+<button onclick="addRule('normalize')">Adicionar</button>
+
+<br><br>
+
+<table border="1" id="normalizeTable">
+  <thead>
+    <tr>
+      <th>De</th>
+      <th>Para</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadDictionary() {
+  const res = await fetch("/dictionary");
+  const data = await res.json();
+
+  const fixedBody = document.querySelector("#fixedTable tbody");
+  const normalizeBody = document.querySelector("#normalizeTable tbody");
+
+  fixedBody.innerHTML = "";
+  normalizeBody.innerHTML = "";
+
+  data.forEach(rule => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${rule.from}</td>
+      <td>${rule.to}</td>
+      <td>
+        <button onclick="deleteRule('${rule.id}')">Excluir</button>
+      </td>
+    `;
+
+    if (rule.capitalizationMode === "fixed") {
+      fixedBody.appendChild(row);
+    } else {
+      normalizeBody.appendChild(row);
+    }
+  });
+}
+
+async function addRule(mode) {
+  const fromInput = document.getElementById(mode + "From");
+  const toInput = document.getElementById(mode + "To");
+
+  const from = fromInput.value.trim();
+  const to = toInput.value.trim();
+
+  if (!from || !to) {
+    alert("Preencha ambos os campos.");
+    return;
+  }
+
+  await fetch("/dictionary", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from,
+      to,
+      capitalizationMode: mode,
+      wholeWord: true
+    })
+  });
+
+  fromInput.value = "";
+  toInput.value = "";
+
+  loadDictionary();
+}
+
+async function deleteRule(id) {
+  if (!confirm("Remover esta regra?")) return;
+
+  await fetch("/dictionary/" + id, {
+    method: "DELETE"
+  });
+
+  loadDictionary();
+}
+
+loadDictionary();
+</script>
   </body>
 </html>

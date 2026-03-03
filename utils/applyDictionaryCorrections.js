@@ -4,6 +4,32 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function applyReplacement(match, rule) {
+  // Modo fixo: sempre retorna exatamente o "to"
+  if (rule.capitalizationMode === "fixed") {
+    return rule.to;
+  }
+
+  // Modo normalize: respeita padrão do texto original
+  if (rule.capitalizationMode === "normalize") {
+    // Tudo maiúsculo
+    if (match === match.toUpperCase()) {
+      return rule.to.toUpperCase();
+    }
+
+    // Primeira letra maiúscula
+    if (match[0] === match[0].toUpperCase()) {
+      return rule.to.charAt(0).toUpperCase() + rule.to.slice(1);
+    }
+
+    // Tudo minúsculo
+    return rule.to;
+  }
+
+  // fallback de segurança
+  return rule.to;
+}
+
 /**
  * Aplica regras de substituição "de → para"
  * - Preserva espaços iniciais nas regras
@@ -17,16 +43,18 @@ function applyDictionaryCorrections(paragraphs, dictionary) {
     for (const rule of dictionary) {
       if (!rule.from) continue;
 
-      const flags = rule.caseSensitive ? "g" : "gi";
+      // Agora sempre usamos busca case-insensitive
+      const flags = "gi";
 
-      // NÃO usamos trim() para preservar espaços intencionais
       const pattern = rule.wholeWord
         ? `\\b${escapeRegExp(rule.from)}\\b`
         : escapeRegExp(rule.from);
 
       const regex = new RegExp(pattern, flags);
 
-      updatedText = updatedText.replace(regex, rule.to);
+      updatedText = updatedText.replace(regex, (match) =>
+        applyReplacement(match, rule)
+      );
     }
 
     return {

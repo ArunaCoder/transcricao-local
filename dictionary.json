@@ -3,217 +3,182 @@
     "id": "1",
     "from": " do eu",
     "to": " do “eu”",
-    "caseSensitive": false,
+    "capitalizationMode": "normalize",
     "wholeWord": false
   },
   {
     "id": "2",
     "from": " no eu",
-    "to": " no \"eu\"",
-    "caseSensitive": false,
+    "to": " no “eu”",
+    "capitalizationMode": "normalize",
     "wholeWord": false
   },
   {
     "id": "3",
     "from": " o eu",
     "to": " o “eu”",
-    "caseSensitive": false,
+    "capitalizationMode": "normalize",
     "wholeWord": false
   },
   {
     "id": "4",
     "from": " não eu",
     "to": " “não eu”",
-    "caseSensitive": false,
+    "capitalizationMode": "normalize",
     "wholeWord": false
   },
   {
     "id": "5",
     "from": " um eu",
     "to": " um “eu”",
-    "caseSensitive": false,
+    "capitalizationMode": "normalize",
     "wholeWord": false
   },
   {
     "id": "6",
     "from": "Atmavichara",
     "to": "Atma Vichara",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "7",
     "from": "auto conhecimento",
     "to": "Autoconhecimento",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "8",
     "from": "auto investigação",
     "to": "autoinvestigação",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "9",
     "from": "autoconhecimento",
     "to": "Autoconhecimento",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "10",
     "from": "despertar da consciência",
     "to": "Despertar da Consciência",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "11",
     "from": "despertar espiritual",
     "to": "Despertar Espiritual",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "12",
     "from": "egóica",
     "to": "egoica",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "13",
     "from": "egóico",
     "to": "egoico",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "14",
     "from": "esse eu",
     "to": "esse “eu”",
-    "caseSensitive": false,
-    "wholeWord": false
-  },
-  {
-    "id": "15",
-    "from": "Esse eu",
-    "to": "Esse “eu”",
-    "caseSensitive": true,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "16",
     "from": "este eu",
     "to": "esse “eu”",
-    "caseSensitive": false,
-    "wholeWord": false
-  },
-  {
-    "id": "17",
-    "from": "Este eu",
-    "to": "Esse “eu”",
-    "caseSensitive": true,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "18",
     "from": "estado natural",
     "to": "Estado Natural",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "19",
     "from": "iluminação espiritual",
     "to": "Iluminação Espiritual",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "20",
     "from": "mestre",
     "to": "Mestre",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "21",
     "from": "real meditação",
     "to": "Real Meditação",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "22",
-    "from": "Seu ser",
-    "to": "Seu Ser",
-    "caseSensitive": true,
-    "wholeWord": false
-  },
-  {
-    "id": "23",
     "from": "seu ser",
     "to": "seu Ser",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "24",
     "from": "sofridor",
     "to": "sofredor",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "25",
     "from": "Túria",
     "to": "Turiya",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "26",
     "from": "Vidyāra",
     "to": "Vichara",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "fixed",
+    "wholeWord": true
   },
   {
     "id": "27",
     "from": "avidia",
     "to": "avidya",
-    "caseSensitive": false,
-    "wholeWord": false
-  },
-  {
-    "id": "28",
-    "from": "Avidia",
-    "to": "Avidya",
-    "caseSensitive": true,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "29",
     "from": "avídia",
     "to": "avidya",
-    "caseSensitive": false,
-    "wholeWord": false
-  },
-  {
-    "id": "30",
-    "from": "Avídia",
-    "to": "Avidya",
-    "caseSensitive": true,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   },
   {
     "id": "31",
     "from": "côncio",
     "to": "cônscio",
-    "caseSensitive": false,
-    "wholeWord": false
+    "capitalizationMode": "normalize",
+    "wholeWord": true
   }
 ]
