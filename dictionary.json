@@ -1,38 +1,38 @@
 [
   {
     "id": "1",
-    "from": " do eu",
-    "to": " do “eu”",
+    "from": "do eu",
+    "to": "do “eu”",
     "capitalizationMode": "normalize",
-    "wholeWord": false
+    "wholeWord": true
   },
   {
     "id": "2",
-    "from": " no eu",
-    "to": " no “eu”",
+    "from": "no eu",
+    "to": "no “eu”",
     "capitalizationMode": "normalize",
-    "wholeWord": false
+    "wholeWord": true
   },
   {
     "id": "3",
-    "from": " o eu",
-    "to": " o “eu”",
+    "from": "o eu",
+    "to": "o “eu”",
     "capitalizationMode": "normalize",
-    "wholeWord": false
+    "wholeWord": true
   },
   {
     "id": "4",
-    "from": " não eu",
-    "to": " “não eu”",
+    "from": "não eu",
+    "to": "“não eu”",
     "capitalizationMode": "normalize",
-    "wholeWord": false
+    "wholeWord": true
   },
   {
     "id": "5",
-    "from": " um eu",
-    "to": " um “eu”",
+    "from": "um eu",
+    "to": "um “eu”",
     "capitalizationMode": "normalize",
-    "wholeWord": false
+    "wholeWord": true
   },
   {
     "id": "6",

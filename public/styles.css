@@ -50,22 +50,33 @@ table {
   border-collapse: collapse;
   margin-top: 10px;
   background: white;
+  border: none; /* Remove borda externa da tabela, se houver */
+  border-radius: 8px; /* Opcional: arredonda os cantos se o overflow permitir */
+  overflow: hidden;
 }
 
+/* Bordas apenas horizontais e suaves */
 th, td {
-  padding: 10px;
-  border-bottom: 1px solid #e1e4e8;
+  padding: 12px 10px;
+  border-bottom: 1px solid #c9c9c9; /* Cinza muito claro */
   text-align: left;
 }
+
+/* Cor alternada para as linhas (Zebra Stripes) */
+tr:nth-child(even) {
+  background-color: #e9f4ff;
+}
+
+/* Remove a borda da última linha para um acabamento mais limpo
+tr:last-child td {
+  border-bottom: none;
+} */
 
 th {
   background: #f0f2f5;
   font-weight: bold;
 }
 
-tr:hover {
-  background: #f9fbff;
-}
 
 hr {
   margin: 50px 0;
