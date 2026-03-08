@@ -1,181 +1,241 @@
+/* Estilos Gerais e Base */
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  padding: 40px;
-  color: #333;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 40px;
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 h1 {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 h2 {
-  margin-top: 40px;
-  margin-bottom: 10px;
+    margin-top: 40px;
+    margin-bottom: 10px;
 }
 
-input[type="text"],
-input[type="file"] {
-  padding: 8px;
-  margin-right: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Inputs e Botões */
+input[type="text"] {
+    padding: 8px;
+    margin-right: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-  padding: 8px 14px;
-  border: none;
-  background-color: #2d6cdf;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
+    padding: 8px 14px;
+    border: none;
+    background-color: #2d6cdf;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: #1f4fbf;
+    background-color: #1f4fbf;
 }
 
 button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
+
 button:disabled:hover {
-  background-color: #2d6cdf; /* não muda no hover */
+    background-color: #2d6cdf;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  background: white;
-  border: none; /* Remove borda externa da tabela, se houver */
-  border-radius: 8px; /* Opcional: arredonda os cantos se o overflow permitir */
-  overflow: hidden;
+/* Zona de Drag and Drop */
+.drop-zone {
+    width: 100%;
+    height: 150px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #555;
+    border: 2px dashed #2d6cdf;
+    border-radius: 10px;
+    background: white;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-/* Bordas apenas horizontais e suaves */
-th, td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #c9c9c9; /* Cinza muito claro */
-  text-align: left;
+.drop-zone--over {
+    border-style: solid;
+    background: #e9f4ff;
+    transform: scale(1.01);
 }
 
-/* Cor alternada para as linhas (Zebra Stripes) */
-tr:nth-child(even) {
-  background-color: #e9f4ff;
+.drop-zone__input {
+    display: none;
 }
 
-/* Remove a borda da última linha para um acabamento mais limpo
-tr:last-child td {
-  border-bottom: none;
-} */
-
-th {
-  background: #f0f2f5;
-  font-weight: bold;
+/* Status Container */
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #2d6cdf;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-
-hr {
-  margin: 50px 0;
-  border: none;
-  border-top: 1px solid #ddd;
+.spinner-small {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2d6cdf;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
+#statusText {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Área de Resultado */
 #resultado {
-  margin-top: 20px;
-  padding: 15px;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-#status {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* Layout fixo para ambas as tabelas */
-#fixedTable,
-#normalizeTable {
-  table-layout: fixed;
-}
-
-/* Primeira e segunda coluna iguais */
-#fixedTable th:nth-child(1),
-#fixedTable td:nth-child(1),
-#fixedTable th:nth-child(2),
-#fixedTable td:nth-child(2),
-#normalizeTable th:nth-child(1),
-#normalizeTable td:nth-child(1),
-#normalizeTable th:nth-child(2),
-#normalizeTable td:nth-child(2) {
-  width: 45%;
-}
-
-/* Última coluna menor e igual entre as duas */
-#fixedTable th:nth-child(3),
-#fixedTable td:nth-child(3),
-#normalizeTable th:nth-child(3),
-#normalizeTable td:nth-child(3) {
-  width: 10%;
-  text-align: center;
-}
-
-#audioInput {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#resultado {
-  height: 90vh;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin-top: 20px;
-  padding: 20px;
-  overflow-y: auto;
-  position: relative;
+    height: 60vh;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
 }
 
 #textoResultado {
-  line-height: 1.6;
+    line-height: 1.6;
 }
 
-#resultado {
-  height: 70vh;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin-top: 20px;
-  padding: 20px;
-  overflow-y: auto;
-  position: relative;
+.placeholder-text {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    margin-top: 40px;
 }
 
-/* Loader centralizado apenas quando visível */
+/* Tabelas do Dicionário */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #c9c9c9;
+    text-align: left;
+}
+
+th {
+    background: #f0f2f5;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #e9f4ff;
+}
+
+/* Colunas das Tabelas */
+#fixedTable th:nth-child(1), #fixedTable td:nth-child(1),
+#fixedTable th:nth-child(2), #fixedTable td:nth-child(2),
+#normalizeTable th:nth-child(1), #normalizeTable td:nth-child(1),
+#normalizeTable th:nth-child(2), #normalizeTable td:nth-child(2) {
+    width: 45%;
+}
+
+#fixedTable th:nth-child(3), #fixedTable td:nth-child(3),
+#normalizeTable th:nth-child(3), #normalizeTable td:nth-child(3) {
+    width: 10%;
+    text-align: center;
+}
+
+/* Loaders e Utilitários */
 .loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  width: 50px;
-  height: 50px;
-  border: 6px solid #e0e0e0;
-  border-top: 6px solid #2d6cdf;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px; /* Metade da largura */
+    margin-top: -25px;  /* Metade da altura */
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #2d6cdf;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .hidden {
-  display: none;
+    display: none;
+}
+
+hr {
+    margin: 50px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.dict-form {
+    margin-bottom: 15px;
+}
+
+/* Ícone de Sucesso (Check) */
+.success-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: #28a745;
+    border-radius: 50%;
+    position: relative;
+}
+
+.success-icon::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Ajuste no status de erro (opcional, para combinar) */
+.status-error {
+    border-left-color: #dc3545 !important;
+}
+
+.status-success {
+    border-left-color: #28a745 !important;
+}
+
+.hidden {
+    display: none !important;
 }
